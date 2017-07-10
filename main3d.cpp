@@ -478,6 +478,11 @@ GLvoid callback_motion(int x, int y)
 	glutPostRedisplay();
 }
 
+void *background_sound(void *ptr)
+{
+	system("canberra-gtk-play -f sounds/chilling.wav &");
+}
+
 int main(int argc, char **argv)
 {
 	glutInit(&argc, argv);
@@ -489,8 +494,13 @@ int main(int argc, char **argv)
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("Milky Way");
 
-
 	initGL();
+
+	pthread_t thread1;
+	int iret1;
+	const char *message1 = "Thread 1";
+	pthread_create( &thread1, NULL, background_sound, (void*) message1);
+
 
 	// pthread_create(&play, NULL, ReproducirFondo, (void *)2);
 	//system("canberra-gtk-play -f sounds/theme.wav &");
